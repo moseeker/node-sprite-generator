@@ -1,16 +1,16 @@
-<% layout.images.forEach(function (image) { %>$<%= image.className %>-x: <%= getCSSValue(-image.x, options.rem) %>;
-$<%= image.className %>-y: <%= getCSSValue(-image.y, options.rem) %>;
-$<%= image.className %>-width: <%= getCSSValue(image.width, options.rem) %>;
-$<%= image.className %>-height: <%= getCSSValue(image.height, options.rem) %>;
+<% layout.images.forEach(function (image) { %>$<%= image.className %>-x: <%= getCSSValue(-image.x, options.em) %>;
+$<%= image.className %>-y: <%= getCSSValue(-image.y, options.em) %>;
+$<%= image.className %>-width: <%= getCSSValue(image.width, options.em) %>;
+$<%= image.className %>-height: <%= getCSSValue(image.height, options.em) %>;
 $<%= image.className %>: $<%= image.className %>-x $<%= image.className %>-y $<%= image.className %>-width $<%= image.className %>-height;
 <% }); %>
 
 @mixin <%= spriteName %>-image {
   background-image: url("<%= options.spritePath %>");
-}<% if (options.pixelRatio !== 1) { %>
+}<% if (options.pixelRatio !== 1 || options.em) { %>
 
 @mixin <%= spriteName %>-size {
-  background-size: <%= getCSSValue(layout.width, options.rem) %> <%= getCSSValue(layout.height, options.rem) %>;
+  background-size: <%= getCSSValue(layout.width, options.em) %> <%= getCSSValue(layout.height, options.em) %>;
 }<% } %>
 
 @mixin <%= spriteName %>-position($sprite) {
@@ -35,9 +35,6 @@ $<%= image.className %>: $<%= image.className %>-x $<%= image.className %>-y $<%
 
 <% layout.images.forEach(function (image) { %>
 .<%= image.className %> {
-  @include <%= spriteName %>($<%= image.className %>);
-  <% if (options.rem) { %>
-  @include <%= spriteName %>-size;
-  <% } %>
-}
+  @include <%= spriteName %>($<%= image.className %>);<% if (options.em) { %>
+  @include <%= spriteName %>-size;<% } %> }
 <% }); %>
