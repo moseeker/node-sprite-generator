@@ -5,16 +5,14 @@ $<%= image.className %>-height: <%= getCSSValue(image.height, options.em) %>;
 $<%= image.className %>: $<%= image.className %>-x $<%= image.className %>-y $<%= image.className %>-width $<%= image.className %>-height;
 <% }); %>
 
-@mixin <%= spriteName %>-image {
-  background-image: url("<%= options.spritePath %>");
-}<% if (options.pixelRatio !== 1 || options.em) { %>
+<% if (options.pixelRatio !== 1 || options.em) { %>
 
 @mixin <%= spriteName %>-size {
-  background-size: <%= getCSSValue(layout.width, options.em) %> <%= getCSSValue(layout.height, options.em) %>;
+  background-size: <%= layout.width / 14 * .7 %>em <%= layout.height / 14 * .7 %>em;
 }<% } %>
 
 @mixin <%= spriteName %>-position($sprite) {
-  background-position: nth($sprite, 1) nth($sprite, 2);
+  background-position: nth($sprite, 1) * .7 nth($sprite, 2) * .7;
 }
 
 @mixin <%= spriteName %>-width($sprite) {
@@ -22,11 +20,11 @@ $<%= image.className %>: $<%= image.className %>-x $<%= image.className %>-y $<%
 }
 
 @mixin <%= spriteName %>-height($sprite) {
-  height: nth($sprite, 4);
+  height: nth($sprite, 4) * .7;
 }
 
 @mixin <%= spriteName %>($sprite) {
-  @include <%= spriteName %>-image;<% if (options.pixelRatio !== 1) { %>
+  <% if (options.pixelRatio !== 1) { %>
   @include <%= spriteName %>-size;<% } %>
   @include <%= spriteName %>-position($sprite);
   @include <%= spriteName %>-width($sprite);
